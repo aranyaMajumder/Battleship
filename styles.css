@@ -1,0 +1,82 @@
+.grid{
+    position: absolute;
+    width: 900px;
+    height: 400px;
+    z-index: 15;
+    top: 35%;
+    left: 20%;
+    margin: -100px 0 0 -150px;
+
+}
+.grid-buttons{
+    height: 35px;
+    width:35px;
+    border-style: solid;
+    border-width: 1px;
+    background-color:white;
+}
+.opp-grid-buttons:hover{
+    background-color: rgb(207, 200, 200);
+}
+
+.opp-grid-buttons{
+    height: 35px;
+    width:35px;
+    border-style: solid;
+    border-width: 1px;
+    background-color:white;
+}
+.grid-buttons:hover{
+    background-color: rgb(207, 200, 200);
+}
+
+.grid-border{
+    background-color: rgb(197, 197, 197);
+    height: 35px;
+    width: 35px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(197, 197, 197);
+}
+body{
+    background-color: white;
+}
+
+.tool-buttons{
+    border-width: 2px;
+    border-style:solid;
+}
+.tool-buttons:hover{
+    background-color: ivory;
+}
+
+.topnav{
+    position:absolute;
+    width : 100%;
+    height: 50px;
+    top:0%;
+    left: 0%;
+    background-color:rgb(96, 96, 182);
+    color: white;
+    border-style: none;
+}
+.topnav-ele{
+    position: absolute;
+    left: 20px;
+    top:15px;
+    color: white;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.sidenav{
+    position:absolute;
+    width : 320px;
+    height: 500px;
+    top:10%;
+    left: 75%;
+    background-color: aqua;
+    text-align: center;
+    border-style: dotted;
+}
+h1{
+    font-family: Arial, Helvetica, sans-serif;
+}
