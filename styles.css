@@ -47,7 +47,7 @@ body{
     border-style:solid;
 }
 .tool-buttons:hover{
-    background-color: ivory;
+    background-color:rgb(255, 255, 255);
 }
 
 .topnav{
