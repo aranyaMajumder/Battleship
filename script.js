@@ -1,3 +1,8 @@
+createButtons(13,25)
+createSidenav("Menu")
+
+
+
 let place = false
 let your_chance = false
 let ship = 0
@@ -47,13 +52,16 @@ function createNewMaze(isPlace){
     if (isPlace==true){
         createSidenav("Place-ships")
         filled_blocks = []
+        ship1=0
+        ship2=0
+        ship3=0
     }
     createButtons(13,25)
 }
 
 
 
-createButtons(13,25)
+
 
 function select(cell){
     if((your_chance==true)&&(cell.className=="opp-grid-buttons")){ //our chance to guess
@@ -193,8 +201,15 @@ function createSidenav(contentType){
         const heading = document.createElement("h1")
         heading.textContent = "Place Ships"
 
-        const instructions = document.createElement("h1")
-        instructions.textContent = ""
+        const doneButton = document.createElement("button")
+        doneButton.className = "tool-buttons"
+        doneButton.id = "done-placing"
+        doneButton.textContent = "Start Playing!"
+        doneButton.addEventListener('click', donePlacing)
+
+        const instructions = document.createElement("p")
+        instructions.textContent = "Select a ship from below and place it on the grid. Once all ships are placed, press 'Start Playing!'"
+
 
         const createNewButton = document.createElement("button")
         createNewButton.className = "tool-buttons"
@@ -224,7 +239,14 @@ function createSidenav(contentType){
         sevenSquared.addEventListener('click', setShipValue.bind(null,3))
 
         sidenavDiv.appendChild(heading)
+        sidenavDiv.appendChild(document.createElement("br"))
+        sidenavDiv.appendChild(document.createElement("br"))
+        sidenavDiv.appendChild(instructions)
+        sidenavDiv.appendChild(document.createElement("br"))
+        sidenavDiv.appendChild(document.createElement("br"))       
         
+
+
         sidenavDiv.appendChild(threeSquare)
         sidenavDiv.appendChild(document.createElement("br"))
         sidenavDiv.appendChild(document.createElement("br"))
@@ -238,6 +260,10 @@ function createSidenav(contentType){
         sidenavDiv.appendChild(document.createElement("br"))
     
         sidenavDiv.appendChild(createNewButton)  
+        sidenavDiv.appendChild(document.createElement("br"))
+        sidenavDiv.appendChild(document.createElement("br"))
+
+        sidenavDiv.appendChild(doneButton)
 
         document.body.appendChild(sidenavDiv)
     }
@@ -248,19 +274,16 @@ function setShipValue(size){
     place = true
     if(size==1){
         ship1 = 1
-        ship2=0
-        ship3=0
+
     }
     else if(size==2){
         ship2 = 1
-        ship1 = 0
-        ship3 = 0
+
 
     }
     else if(size==3){
         ship3 = 1
-        ship1 = 0
-        ship2 = 0
+
     }
 }
 
@@ -284,4 +307,12 @@ function checkIfRed(){
     return false
 }
 
-createSidenav("Menu")
+function donePlacing(){
+    if ((ship1==2)&&(ship2==2)&&(ship3==2)){
+        createSidenav("main-game")
+    }
+    else{
+        alert("Place all the ships!")
+    }
+}
+
