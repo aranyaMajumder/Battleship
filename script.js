@@ -20,14 +20,14 @@ function createButtons(rows,columns){
     for(let i=1;i<=rows*columns;i++)
     {
         const button = document.createElement('button');
-        button.textContent = i
+        button.textContent = ""
         button.id = i
         
         div.appendChild(button);
         if((i+12)%25==0){
             button.className = "grid-border"
         }
-        else if(i%columns>13){
+        else if((i%columns>13)){
             button.className = "grid-buttons"
             button.addEventListener('mousedown',select.bind(null,button))
             button.addEventListener('mouseover', hover.bind(null, 1, button))
@@ -35,6 +35,7 @@ function createButtons(rows,columns){
         else{
             button.className = "opp-grid-buttons"
             button.addEventListener("mousedown", select.bind(null, button))
+            button.addEventListener('mouseover',hoverYourChance.bind(null,button))
         }
         if (i%columns==0){
             button.className = "grid-buttons"
@@ -166,6 +167,18 @@ function hover(rotate,b){
     else{
         
     }
+}
+
+function hoverYourChance(bi){
+    if((your_chance==true)&&(bi.id%25!=0)){
+        for (let c=1;c<=25*13;c++){
+            const each_button = document.getElementById(c)
+            if ((each_button.style.backgroundColor=="grey")){
+                each_button.style.backgroundColor="white"
+            }
+        bi.style.backgroundColor = "grey"           
+    }
+}
 }
 
 function createSidenav(contentType){
@@ -310,7 +323,7 @@ function checkIfRed(){
 
 function donePlacing(){
     if ((ship1==2)&&(ship2==2)&&(ship3==2)){
-        createSidenav("main-game")
+        
         generateEnemyShips()
     }
     else{
@@ -336,6 +349,7 @@ function generateEnemyShips(){
     size_on_either_side +=1
     }
     //tempHighlight()
+    mainGame()
 }
 
 function tempHighlight(){
@@ -366,5 +380,17 @@ function nonOverlapEnemy(){
         if (!overlap){
             return position
         }
+    }
+}
+
+function mainGame(){
+    createSidenav("main-game")
+    
+        if (your_chance==false){
+            position = randomIntFromInterval(14, 25)+(25*(Math.floor(Math.random()*13)))
+            document.getElementById(position).style.backgroundColor="red"
+            your_chance = true
+
+
     }
 }
