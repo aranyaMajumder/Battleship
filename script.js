@@ -10,6 +10,7 @@ let ship1 = 0   //0 = false, 1 = in progress of setting, 2 = true(set the ship)
 let ship2 = 0   //0 = false, 1 = in progress of setting, 2 = true(set the ship)
 let ship3 = 0   //0 = false, 1 = in progress of setting, 2 = true(set the ship)
 let filled_blocks = []
+let enemy_ships = []
 
 
 function createButtons(rows,columns){
@@ -310,9 +311,60 @@ function checkIfRed(){
 function donePlacing(){
     if ((ship1==2)&&(ship2==2)&&(ship3==2)){
         createSidenav("main-game")
+        generateEnemyShips()
     }
     else{
         alert("Place all the ships!")
     }
 }
 
+function generateEnemyShips(){
+    size_on_either_side = 1
+    for (let c=1;c<=3;c++){
+    //enemyRotate = Math.floor(Math.random() * 5)
+    enemyRotate = 1
+    if (enemyRotate==1){
+        nonOverlapEnemy()
+        for (let j=0;j<=size_on_either_side;j++){
+            enemy_ships.push(position+j)
+
+        }
+        for (let j=0;j<=size_on_either_side;j++){
+            enemy_ships.push(position-j)
+        }
+    }
+    size_on_either_side +=1
+    }
+    //tempHighlight()
+}
+
+function tempHighlight(){
+    for (let c=0;c<enemy_ships.length;c++){
+        document.getElementById(enemy_ships[c]).style.backgroundColor = "orange"
+    }
+}
+
+function randomIntFromInterval(min, max) { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  }
+
+function nonOverlapEnemy(){
+    while(true){    
+        overlap = false
+        position = randomIntFromInterval(size_on_either_side+1,12-size_on_either_side)+(25*(Math.floor(Math.random()*13)))
+        for (let j=0;j<=size_on_either_side+1;j++){
+            if(enemy_ships.includes(position+j)){
+                overlap = true
+            }
+
+        }
+        for (let j=0;j<=size_on_either_side+1;j++){
+            if(enemy_ships.includes(position-j)){
+                overlap = true
+            }
+        }
+        if (!overlap){
+            return position
+        }
+    }
+}
