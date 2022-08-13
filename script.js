@@ -5,12 +5,14 @@ createSidenav("Menu")
 
 let place = false
 let your_chance = false
+
 let ship = 0
 let ship1 = 0   //0 = false, 1 = in progress of setting, 2 = true(set the ship)   
 let ship2 = 0   //0 = false, 1 = in progress of setting, 2 = true(set the ship)
 let ship3 = 0   //0 = false, 1 = in progress of setting, 2 = true(set the ship)
 let filled_blocks = []
 let enemy_ships = []
+let possible_blocks = []
 
 
 function createButtons(rows,columns){
@@ -20,7 +22,7 @@ function createButtons(rows,columns){
     for(let i=1;i<=rows*columns;i++)
     {
         const button = document.createElement('button');
-        button.textContent = ""
+        button.textContent = i
         button.id = i
         
         div.appendChild(button);
@@ -67,8 +69,19 @@ function createNewMaze(isPlace){
 
 function select(cell){
     if((your_chance==true)&&(cell.className=="opp-grid-buttons")){ //our chance to guess
-        cell.style.backgroundColor = "black"
+        if (enemy_ships.includes(parseInt(cell.id))){
+
+            cell.style.backgroundColor = "green"
+            
+        }
+        else{
+
+            cell.style.backgroundColor = "black"
+            console.log(cell.id)
+        }
+            
         your_chance = false
+        mainGame()
     }
     else if((place==true)&&(ship1==2)&&(ship2==2)&&(ship3==2)){
         place = false
@@ -176,7 +189,7 @@ function hoverYourChance(bi){
             if ((each_button.style.backgroundColor=="grey")){
                 each_button.style.backgroundColor="white"
             }
-        bi.style.backgroundColor = "grey"           
+                  
     }
 }
 }
@@ -382,13 +395,68 @@ function nonOverlapEnemy(){
         }
     }
 }
-
+let p = true
+let firstTime = true
+let loop = true
+let rand = false
 function mainGame(){
     createSidenav("main-game")
     
         if (your_chance==false){
-            position = randomIntFromInterval(14, 25)+(25*(Math.floor(Math.random()*13)))
-            document.getElementById(position).style.backgroundColor="red"
+
+            if (possible_blocks.length>0){
+                console.log("Trying")
+                if (firstTime==true){
+                    position=possible_blocks[0]
+                    firstTime=false
+                    console.log(position)   
+                }
+                else if(loop==true){
+                    position=possible_blocks[1]
+                    possible_blocks[1]+=1
+                }
+                else if((p==true)&&(loop==false)){
+                    position=possible_blocks[0]
+                    possible_blocks[0]-=1
+                }
+
+                
+            }
+            else{
+                position = randomIntFromInterval(14, 25)+(25*(Math.floor(Math.random()*13)))
+            }
+            if (document.getElementById(position).className!="grid-buttons"){
+                firstTime=true
+                position = randomIntFromInterval(14, 25)+(25*(Math.floor(Math.random()*13)))
+                p = true
+                rand = true
+                possible_blocks=[]
+                loop = true
+                //rand = false
+            }
+
+
+            if (filled_blocks.includes(position))
+            {
+                document.getElementById(position).style.backgroundColor="red"
+                if((firstTime==true))
+                {possible_blocks.push(position-1)
+                possible_blocks.push(position+1)
+
+                }
+            }
+            else{
+
+                document.getElementById(position).style.backgroundColor="black" //if there is nothing behind in first try
+                if ((possible_blocks.length>0)&&(firstTime==true)){
+                    if((rand==true)||(p==true)){
+                        p=false
+                        firstTime=false}
+                }
+                else if(firstTime==false){ //nothing in front
+                    if((rand==true)||(loop==true)){loop=false}
+                }
+            }
             your_chance = true
 
 
