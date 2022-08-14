@@ -345,8 +345,24 @@ function donePlacing() {
 }
 
 function generateEnemyShips() {
+    size_on_either_side=1
+    for (let c = 1; c <= 1; c++) {
+        //enemyRotate = Math.floor(Math.random() * 5)
+        enemyRotate = 1
+        if (enemyRotate == 1) {
+            nonOverlapEnemy()
+            for (let j = 0; j <= size_on_either_side; j++) {
+                enemy_ships.push(position + j)
+
+            }
+            for (let j = 0; j <= size_on_either_side; j++) {
+                enemy_ships.push(position - j)
+            }
+        }
+        size_on_either_side += 1
+    }
     size_on_either_side = 1
-    for (let c = 1; c <= 3; c++) {
+    for (let c = 1; c <= 4; c++) {
         //enemyRotate = Math.floor(Math.random() * 5)
         enemyRotate = 1
         if (enemyRotate == 1) {
@@ -452,6 +468,7 @@ function mainGame() {
         if (filled_blocks.includes(position)) //if guess is correct
         {
             document.getElementById(position).style.backgroundColor = "red"
+            
             if ((firstTime == true)&&(!alreadyHit.includes(position))) {
                 possible_blocks.push(position - 1)
                 possible_blocks.push(position + 1)
@@ -472,6 +489,7 @@ function mainGame() {
                 possible_blocks = []
             }
             if (set == true) {
+                
                 if (loop == true) {
                     loop = false
                 }
